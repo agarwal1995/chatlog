@@ -21,6 +21,12 @@ public class ChatLogDaoServiceImpl implements ChatLogDaoService {
     @Autowired
     private ChatLogRepository repository;
 
+    /**
+     * convert the chatlogRequestDto to the chat and save to db
+     * @param userId
+     * @param chatLogRequestDto
+     * @return
+     */
     @Override
     public String save(String userId, ChatLogRequestDto chatLogRequestDto) {
         ChatLog chatLog = convert(chatLogRequestDto, userId);
@@ -33,11 +39,20 @@ public class ChatLogDaoServiceImpl implements ChatLogDaoService {
         return repository.getByUserIdOrderByTimestampDesc(userId, pageable);
     }
 
+    /**
+     * delete all the chat for a given user
+     */
     @Override
     public void deleteAllChats(String user) {
         repository.deleteChatLogForUser(user);
     }
 
+    /**
+     * Fetch the chatlog by the messageId
+     * if not present throw NOT_FOUND_EXCEPTION
+     * else soft delete the entry with the given messageId
+     * @param messageId
+     */
     @Override
     public void deletedChatLogByMessageId(String messageId) {
         Optional<ChatLog> optionalChatLog = repository.getByMessageId(messageId);
