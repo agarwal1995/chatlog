@@ -18,7 +18,7 @@ public class ChatLogController {
     @Autowired
     private ChatLogService chatLogService;
 
-    @PostMapping("/{userId}")
+    @PostMapping("{userId}")
     public ResponseEntity<Object> create(@PathVariable("userId") String userId,
                                          @RequestBody ChatLogRequestDto requestDto) {
         log.info("create chatLog called :: user : {}", userId);
